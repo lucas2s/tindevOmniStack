@@ -6,6 +6,7 @@ import api from '../services/api';
 import logo from '../assets/logo.svg';
 import like from '../assets/like.svg';
 import dislike from '../assets/dislike.svg';
+import io from 'socket.io-client';
 
 
 export default function Main({ match }) {
@@ -21,6 +22,13 @@ export default function Main({ match }) {
             setUsers(response.data);
         }
         loadUsers();
+    }, [match.params.id]);
+
+    useEffect(() => { 
+        const socket = io('http://localhost:3333', {
+            query: { user: match.params.id }
+        });
+
     }, [match.params.id]);
 
     async function handleLike(id){
